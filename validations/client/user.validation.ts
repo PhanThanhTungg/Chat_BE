@@ -34,3 +34,13 @@ export const registerValidation = async (req: Request, res: Response, next:NextF
 
   next();
 }
+
+export const loginValidation = async(req: Request, res: Response, next:NextFunction):Promise<any>=> {
+  if(!req.body.email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+  if(!req.body.password) {
+    return res.status(400).json({ message: "Password is required" });
+  }
+  next();
+}

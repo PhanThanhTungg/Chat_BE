@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from "sequelize";
 import sequelize from "../config/connect";
+import bcrypt from "bcrypt";
 
 const User = sequelize.define("User", {
   id: {
@@ -49,5 +50,11 @@ const User = sequelize.define("User", {
   tableName: "users",
   timestamps: false
 });
+
+User.beforeCreate((user)=>{
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(user["password"], salt);
+  user["password"] = hashedPassword;
+})
 
 export default User;

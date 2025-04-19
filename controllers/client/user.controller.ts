@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import  User  from "../../models/user.model";
 
-export const register = async(req: Request, res: Response): Promise<any> => {
+export const register = async(req: Request, res: Response):Promise<any>=> {
   const {email, password, phone, fullName} = req.body;
   try {
     const newUser = await User.create({email, password, phone, fullName});

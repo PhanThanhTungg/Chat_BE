@@ -10,9 +10,8 @@ app.use(cors());
 import connectMysql from './config/connect';
 connectMysql;
 
-app.get("/", (req,res)=>{
-  res.send("Hello World!")
-})
+import clientRoute from './routes/client/index.route';
+clientRoute(app);
 
 const port:number = parseInt(process.env.PORT+"") || 3000;
 app.listen(port, ()=>{

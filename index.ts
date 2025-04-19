@@ -4,8 +4,11 @@ const app = express();
 import dotenv from "dotenv";
 dotenv.config();
 
-import { connectMysql } from './config/connect';
-connectMysql();
+import cors from 'cors';
+app.use(cors());
+
+import connectMysql from './config/connect';
+connectMysql;
 
 app.get("/", (req,res)=>{
   res.send("Hello World!")

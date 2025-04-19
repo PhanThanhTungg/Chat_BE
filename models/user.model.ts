@@ -20,6 +20,10 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
+  refreshToken:{
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
   phone: {
     type: DataTypes.STRING(15),
     allowNull: false,

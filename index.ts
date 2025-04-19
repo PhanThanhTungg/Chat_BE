@@ -10,6 +10,10 @@ app.use(cors());
 import connectMysql from './config/connect';
 connectMysql;
 
+import bodyParser from 'body-parser';
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 import clientRoute from './routes/client/index.route';
 clientRoute(app);
 

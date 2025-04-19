@@ -11,6 +11,9 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING(50),
     allowNull: false,
     unique: true,
+    validate: {
+      isEmail: true,
+    },
   },
   password: {
     type: DataTypes.STRING(255),
@@ -44,7 +47,7 @@ const User = sequelize.define("User", {
   }
 }, {
   tableName: "users",
-  timestamps: true,
+  timestamps: false
 });
 
 export default User;

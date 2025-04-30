@@ -6,6 +6,6 @@ import * as validation from "../../validations/client/user.validation";
 const router = Router();
 
 router.post("/register", validation.registerValidation, controller.register);
-router.get("/login",validation.loginValidation, controller.login)
+router.post("/login",validation.loginValidation, controller.login)
 
 export default router;

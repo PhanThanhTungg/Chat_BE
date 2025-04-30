@@ -45,6 +45,7 @@ export const login = async (req: Request, res: Response): Promise<any> => {
     }
 
     const matchPassword = await brcypt.compare(password, user["password"]);
+
     if (!matchPassword) {
       return res.status(401).json({ message: "Invalid password" });
     }
@@ -58,7 +59,7 @@ export const login = async (req: Request, res: Response): Promise<any> => {
       message: "User logged in successfully", 
       user:{
         fullName: user["fullName"],
-        accessToken, refreshToken
+        accessToken
       }
     });
 

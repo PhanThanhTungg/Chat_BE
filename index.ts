@@ -14,6 +14,9 @@ import bodyParser from 'body-parser';
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
+import cookieParser from 'cookie-parser';
+app.use(cookieParser());
+
 import clientRoute from './routes/client/index.route';
 clientRoute(app);
 

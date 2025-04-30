@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import User from "../../models/user.model";
 
 export const registerValidation = async (req: Request, res: Response, next:NextFunction):Promise<any>=> {
+  console.log("validating register...")
+  console.log(req.body)
   if(!req.body.email) {
     return res.status(400).json({ message: "Email is required" });
   }
@@ -31,7 +33,7 @@ export const registerValidation = async (req: Request, res: Response, next:NextF
   if(!req.body.fullName) {
     return res.status(400).json({ message: "Full name is required" });
   }
-
+  console.log("validating register... done")
   next();
 }
 

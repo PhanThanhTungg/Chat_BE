@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import User from "../../models/user.model";
 import { genAccessToken, genRefreshToken } from "../../helpers/genJWTToken.helper";
-import brypt from "bcrypt";
+import { saveCookie } from "../../helpers/httpOnly.helper";
+import brcypt from "bcrypt";
 
 export const register = async (req: Request, res: Response): Promise<any> => {
+  console.log("Registering user...");
   const { email, password, phone, fullName } = req.body;
   try {
     const newUser = await User.create(
@@ -17,11 +19,13 @@ export const register = async (req: Request, res: Response): Promise<any> => {
     newUser["refreshToken"] = refreshToken;
     await newUser.save();
 
+    saveCookie(res, "refreshToken", refreshToken);
+
     return res.status(201).json({ 
       message: "User registered successfully", 
       user:{
         fullName: newUser["fullName"],
-        accessToken, refreshToken
+        accessToken
       }
     });
 
@@ -40,7 +44,7 @@ export const login = async (req: Request, res: Response): Promise<any> => {
       return res.status(401).json({ message: "Invalid email" });
     }
 
-    const matchPassword = await brypt.compare(password, user["password"]);
+    const matchPassword = await brcypt.compare(password, user["password"]);
     if (!matchPassword) {
       return res.status(401).json({ message: "Invalid password" });
     }

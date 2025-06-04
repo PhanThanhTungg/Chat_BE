@@ -20,10 +20,6 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
-  refreshToken:{
-    type: DataTypes.TEXT,
-    allowNull: true,
-  },
   phone: {
     type: DataTypes.STRING(15),
     allowNull: false,
@@ -56,8 +52,8 @@ const User = sequelize.define("User", {
 });
 
 User.beforeCreate((user)=>{
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(user["password"], salt);
+  const salt:string = bcrypt.genSaltSync(10);
+  const hashedPassword:string = bcrypt.hashSync(user["password"], salt);
   user["password"] = hashedPassword;
 })
 

@@ -3,7 +3,7 @@ import User from "../../models/user.model";
 
 export const registerValidation = async (req: Request, res: Response, next:NextFunction):Promise<any>=> {
   console.log("validating register...")
-  console.log(req.body)
+
   if(!req.body.email) {
     return res.status(400).json({ message: "Email is required" });
   }

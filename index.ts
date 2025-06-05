@@ -5,9 +5,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import cors from 'cors';
+const corsOrigin:string | boolean = process.env.CORS_ORIGIN == "true" ? true : process.env.CORS_ORIGIN;
 app.use(cors(
   {
-    origin: process.env.CORS_ORIGIN,
+    origin: corsOrigin,
     credentials: true,
   }
 ));

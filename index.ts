@@ -5,7 +5,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import cors from 'cors';
-app.use(cors());
+app.use(cors(
+  {
+    origin: true,
+    credentials: true,
+  }
+));
 
 import connectMysql from './config/connect';
 connectMysql;

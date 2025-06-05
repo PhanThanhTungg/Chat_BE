@@ -1,10 +1,13 @@
 // type auth
 export interface SuccessAuthResponse {
   message: string;
-  user: {
+  accessToken: string;
+  user?: {
     fullName: string;
-    accessToken: string;
-  };
+    email: string;
+    phone: string;
+    avatar: string;
+  }
 }
 
 export interface SuccessLogoutResponse {

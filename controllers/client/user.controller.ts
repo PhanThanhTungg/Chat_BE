@@ -27,9 +27,12 @@ export const register = async (req: Request, res: Response): Promise<any> => {
 
     const respone:type.SuccessAuthResponse = {
       message: "User registered successfully",
+      accessToken,
       user: {
-        fullName: newUser["fullName"],  
-        accessToken
+        fullName: newUser["fullName"],
+        email: newUser["email"],
+        phone: newUser["phone"],
+        avatar: newUser["avatar"],
       }
     }
     return res.status(201).json(respone);
@@ -69,9 +72,12 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 
     const response:type.SuccessAuthResponse = {
       message: "User logged in successfully",
+      accessToken,
       user: {
         fullName: user["fullName"],
-        accessToken
+        email: user["email"],
+        phone: user["phone"],
+        avatar: user["avatar"],
       }
     };
     return res.status(200).json(response);
@@ -108,8 +114,8 @@ export const logout = async (req: Request, res: Response): Promise<any> => {
 export const refreshToken = async (req: Request, res: Response): Promise<any> => {
   try {
     const refreshToken:string = req.cookies["refreshToken"];
-    const userId:string = req.body.userId;
-
+    console.log("Refresh token:", refreshToken);
+    
     // check refresh token
     if (!refreshToken) {
       const response:type.ErrorAuthResponse = {
@@ -119,19 +125,20 @@ export const refreshToken = async (req: Request, res: Response): Promise<any> =>
       return res.status(401).json(response);
     }
 
-    // check userId
-    if (!userId) {
+    // verify refresh token
+    const refreshTokenDecoded = verifyToken(refreshToken, "refresh");
+    console.log("Decoded refresh token:", refreshTokenDecoded);
+    if (!refreshTokenDecoded) {
       const response:type.ErrorAuthResponse = {
         message: "Invalid refresh token",
         error: "Forbidden"
       };
       return res.status(403).json(response);
     }
+    const userId:string = refreshTokenDecoded["id"];
 
-    // verify refresh token
-    const refreshTokenDecoded = verifyToken(refreshToken, "refresh");
-    console.log("Decoded refresh token:", refreshTokenDecoded);
-    if (!refreshTokenDecoded || refreshTokenDecoded.id !== userId) {
+    // check userId
+    if (!userId) {
       const response:type.ErrorAuthResponse = {
         message: "Invalid refresh token",
         error: "Forbidden"
@@ -157,10 +164,7 @@ export const refreshToken = async (req: Request, res: Response): Promise<any> =>
     // respond
     const response:type.SuccessAuthResponse = {
       message: "Access token refreshed successfully",
-      user: {
-        fullName: user["fullName"],
-        accessToken: newAccessToken
-      }
+      accessToken: newAccessToken
     };
     return res.status(200).json(response);
 

@@ -4,6 +4,7 @@ import { genAccessToken, genRefreshToken, verifyToken } from "../../helpers/jwtT
 import { saveCookie } from "../../helpers/httpOnly.helper";
 import brcypt from "bcrypt";
 import * as type from "../../types/user.type";
+import { ErrorResponse } from "../../types/response.type";
 
 export const register = async (req: Request, res: Response): Promise<any> => {
   console.log("Registering user...");
@@ -39,7 +40,7 @@ export const register = async (req: Request, res: Response): Promise<any> => {
 
   } catch (error) {
     console.log(error);
-    const respone:type.ErrorAuthResponse = {
+    const respone:ErrorResponse = {
       message: "Error registering user",
       error: error
     }
@@ -84,7 +85,7 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 
   } catch (error) {
     console.log(error);
-    const response:type.ErrorAuthResponse = {
+    const response:ErrorResponse = {
       message: "Internal server error",
       error: error
     };
@@ -103,7 +104,7 @@ export const logout = async (req: Request, res: Response): Promise<any> => {
     return res.status(200).json(response);
   } catch (error) {
     console.log(error);
-    const response:type.ErrorAuthResponse = {
+    const response:ErrorResponse = {
       message: "Internal server error",
       error: error
     };
@@ -114,11 +115,10 @@ export const logout = async (req: Request, res: Response): Promise<any> => {
 export const refreshToken = async (req: Request, res: Response): Promise<any> => {
   try {
     const refreshToken:string = req.cookies["refreshToken"];
-    console.log("Refresh token:", refreshToken);
     
     // check refresh token
     if (!refreshToken) {
-      const response:type.ErrorAuthResponse = {
+      const response:ErrorResponse = {
         message: "No refresh token provided",
         error: "Unauthorized"
       };
@@ -127,9 +127,8 @@ export const refreshToken = async (req: Request, res: Response): Promise<any> =>
 
     // verify refresh token
     const refreshTokenDecoded = verifyToken(refreshToken, "refresh");
-    console.log("Decoded refresh token:", refreshTokenDecoded);
     if (!refreshTokenDecoded) {
-      const response:type.ErrorAuthResponse = {
+      const response:ErrorResponse = {
         message: "Invalid refresh token",
         error: "Forbidden"
       };
@@ -139,7 +138,7 @@ export const refreshToken = async (req: Request, res: Response): Promise<any> =>
 
     // check userId
     if (!userId) {
-      const response:type.ErrorAuthResponse = {
+      const response:ErrorResponse = {
         message: "Invalid refresh token",
         error: "Forbidden"
       };
@@ -149,7 +148,7 @@ export const refreshToken = async (req: Request, res: Response): Promise<any> =>
     // find user in database
     const user = await User.findOne({ where: { id: userId } });
     if (!user) {
-      const response:type.ErrorAuthResponse = {
+      const response:ErrorResponse = {
         message: "User not found",
         error: "Not Found"
       };
@@ -170,7 +169,7 @@ export const refreshToken = async (req: Request, res: Response): Promise<any> =>
 
   } catch (error) {
     console.log(error);
-    const response:type.ErrorAuthResponse = {
+    const response:ErrorResponse = {
       message: "Internal server error",
       error: error
     };

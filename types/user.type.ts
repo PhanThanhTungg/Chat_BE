@@ -14,11 +14,6 @@ export interface SuccessLogoutResponse {
   message: string;
 }
 
-export interface ErrorAuthResponse {
-  message: string;
-  error: string;
-}
-
 export interface LoginInput {
   email: string;
   password: string;

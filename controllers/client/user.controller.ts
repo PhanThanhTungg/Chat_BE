@@ -67,7 +67,6 @@ export const login = async (req: Request, res: Response): Promise<any> => {
     // create tokens
     const accessToken:string = genAccessToken(user["id"]);
     const refreshToken:string = genRefreshToken(user["id"]);
-    await user.save();
 
     saveCookie(res, "refreshToken", refreshToken);
 
@@ -130,6 +129,13 @@ export const refreshToken = async (req: Request, res: Response): Promise<any> =>
     if (!refreshTokenDecoded) {
       const response:ErrorResponse = {
         message: "Invalid refresh token",
+        error: "Forbidden"
+      };
+      return res.status(403).json(response);
+    }
+    if(refreshTokenDecoded.expired == true){
+      const response:ErrorResponse = {
+        message: "Refresh token expired",
         error: "Forbidden"
       };
       return res.status(403).json(response);

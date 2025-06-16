@@ -29,7 +29,14 @@ export const authAccessToken = async (req:Request, res:Response, next: NextFunct
   if (!tokenDecoded) {
     const response = {
       error: "Unauthorized access",
-      message: "Invalid token. Please login again.",
+      message: "Invalid token. Please provide a valid Bearer token.",
+    }
+    return res.status(401).json(response);
+  }
+  if(tokenDecoded.expired == true){
+    const response = {
+      error: "Unauthorized access",
+      message: "access token expired",
     }
     return res.status(401).json(response);
   }
@@ -52,6 +59,7 @@ export const authAccessToken = async (req:Request, res:Response, next: NextFunct
     return res.status(401).json(response);
   }
 
+  res.locals.user = user;
   console.log("tokenDecoded", tokenDecoded);
   next();
 }

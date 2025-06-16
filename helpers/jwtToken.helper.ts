@@ -22,7 +22,9 @@ export const verifyToken = (token:string, type:string):tokenDecoded => {
     }
     return decoded;
   } catch (error) {
-    console.error("Token verification failed:", error);
-    return null;
+    if(error instanceof jwt.TokenExpiredError) {
+      return { expired: true } as tokenDecoded;
+    }
+    else return null;
   }
 }

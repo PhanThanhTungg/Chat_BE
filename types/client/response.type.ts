@@ -4,5 +4,12 @@ export interface ErrorResponse {
 }
 export interface SuccessResponse{
   message: string;
-  data?: any;
+}
+
+export interface ResponseUserSearch extends SuccessResponse {
+  users: Array<{
+    id: string;
+    fullName: string;
+    avatar?: string;
+  }>;
 }

@@ -3,8 +3,8 @@ import User from "../../models/user.model";
 import { genAccessToken, genRefreshToken, verifyToken } from "../../helpers/jwtToken.helper";
 import { saveCookie } from "../../helpers/httpOnly.helper";
 import brcypt from "bcrypt";
-import * as type from "../../types/user.type";
-import { ErrorResponse } from "../../types/response.type";
+import * as type from "../../types/client/auth.type";
+import { ErrorResponse } from "../../types/client/response.type";
 
 export const register = async (req: Request, res: Response): Promise<any> => {
   console.log("Registering user...");

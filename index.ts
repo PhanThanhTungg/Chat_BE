@@ -17,12 +17,15 @@ import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 const server = createServer(app);
 const io = new Server(server,{
-  cors: corsObject
+  cors: corsObject,
 });
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  console.log(socket.handshake.headers.cookie);
 });
+
+global._io = io;
 
 // configure cors
 import cors from 'cors';

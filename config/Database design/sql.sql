@@ -19,8 +19,8 @@ use chat;
 -- create table friends (
 --     userId int not null,
 --     friendId int not null,
--- 	status enum('pending, accepted, block'),
---     createAt datethttps://file+.vscode-resource.vscode-cdn.net/d%3A/tung/Web/chat_project_mysql/Database%20design/Untitled%20%281%29.png?version%3D1744989815261ime default (current_timestamp),
+-- 	   status enum('pending, accepted, block'),
+--     createAt date default (current_timestamp),
 --     acceptedAt datetime,
 --     primary key (userId, friendId),
 --     foreign key (userId) references users(id),
@@ -55,8 +55,8 @@ use chat;
 -- 	id int primary key auto_increment,
 --     conversationId int not null,
 --     senderId int not null,
--- 	content text not null,
---     fileUrl varchar(255),
+-- 	   content text not null,
+--     type enum('text', 'image', 'video', 'file'),
 --     createdAt datetime default (current_timestamp),
 --     foreign key (conversationId) references conversations(id),
 --     foreign key (senderId) references users(id)

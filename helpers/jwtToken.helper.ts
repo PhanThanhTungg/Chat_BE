@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { tokenDecoded } from "../types/user.type";
+import { tokenDecoded } from "../types/client/auth.type";
 
 export const genAccessToken = (id:string):string =>{
   const accessToken:string = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET,{expiresIn: process.env.ACCESS_TOKEN_SECRET_EXPIRE})

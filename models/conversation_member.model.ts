@@ -26,7 +26,7 @@ const ConversationMember = sequelize.define("ConversationMember", {
   },
   role: {
     type: DataTypes.ENUM('admin', 'subadmin', 'member'),
-    allowNull: false
+    allowNull: true
   }
 }, {
   tableName: "conversation_members",
